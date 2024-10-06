@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #00c3ff;
+    }
+
+    .scroll-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh; /* Full height of the viewport */
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory; /* Enables scroll snapping */
+    }
+
+    .image-section {
+      height: 100vh; /* Each image section takes the full height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      scroll-snap-align: start; /* Snap on each section */
+    }
+
+    .image-section img {
+      width: 100vw; /* Full screen width */
+      height: 100vh; /* Full screen height */
+      cursor: pointer;
+      border: 2px solid #00c3ff;
+      transition: transform 0.2s;
+      object-fit: cover; /* Ensures proper scaling */
+    }
+
+    .image-section img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Sub Category Grid */
+    .image-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px;
+      display: none; /* Hidden initially */
+    }
+
+    .image-grid img {
+      margin: 10px;
+      width: 200px;
+      height: 200px;
+      cursor: pointer;
+      border: 2px solid #00c3ff;
+      border-radius: 10px;
+      transition: transform 0.2s;
+    }
+
+    .image-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    .info-box {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #00c3ff;
+      border-radius: 10px;
+      background-color: #222;
+      display: none; /* Hidden initially */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Explore the Wonders of the Universe</h1>
+
+  <!-- Scrollable Fullscreen Images -->
+  <div class="scroll-container">
+    <!-- First Image (Nebula) -->
+    <div class="image-section">
+      <img src="/mnt/data/A_captivating_cosmic_nebula_with_vibrant_colors_sw.png" alt="Nebula" onclick="showSubImages('nebula')">
+    </div>
+    
+    <!-- Second Image (Galaxies) -->
+    <div class="image-section">
+      <img src="https://via.placeholder.com/400?text=Galaxies" alt="Galaxies" onclick="showSubImages('galaxies')">
+    </div>
+
+    <!-- Third Image (Supernova) -->
+    <div class="image-section">
+      <img src="https://via.placeholder.com/400?text=Supernova" alt="Supernova" onclick="showSubImages('supernova')">
+    </div>
+
+    <!-- Fourth Image (Other Events) -->
+    <div class="image-section">
+      <img src="/mnt/data/A_rare_and_fascinating_astronomical_event_where_a_.png" alt="Other Events" onclick="showSubImages('others')">
+    </div>
+  </div>
+
+  <!-- Sub Images Section (initially hidden) -->
+  <div id="sub-category-grid" class="image-grid"></div>
+
+  <!-- Info Box for Selected Sub-image -->
+  <div id="info-box" class="info-box"></div>
+
+  <script>
+    const data = {
+      nebula: [
+        { img: 'https://via.placeholder.com/200?text=Exoplanet', name: 'Exoplanet', info: 'Exoplanets are planets beyond our solar system, often detected by their effects on nearby stars.' },
+        { img: 'https://via.placeholder.com/200?text=Southern+Nebula', name: 'Southern Nebula', info: 'The Southern Ring Nebula is a cloud of gas surrounding a dying star.' },
+        { img: 'https://via.placeholder.com/200?text=Cosmic+Cliff', name: 'Cosmic Cliff', info: 'The Cosmic Cliffs in the Carina Nebula reveal the chaotic birth of stars.' }
+      ],
+      galaxies: [
+        { img: 'https://via.placeholder.com/200?text=Andromeda', name: 'Andromeda Galaxy', info: 'The nearest spiral galaxy to the Milky Way, Andromeda is on a collision course with our galaxy.' },
+        { img: 'https://via.placeholder.com/200?text=Penguin+Galaxy', name: 'Penguin Galaxy', info: 'This galaxy resembles a penguin guarding an egg due to its merging with another galaxy.' }
+      ],
+      supernova: [
+        { img: 'https://via.placeholder.com/200?text=Crab+Nebula', name: 'Crab Nebula', info: 'A remnant of a supernova explosion, the Crab Nebula shines with intense X-rays.' },
+        { img: 'https://via.placeholder.com/200?text=SN+1987A', name: 'Supernova 1987A', info: 'This supernova explosion was one of the brightest events seen in the past 400 years.' }
+      ],
+      others: [
+        { img: 'https://via.placeholder.com/200?text=Diamond+Quasar', name: 'Diamond Quasar', info: 'This quasar is magnified due to gravitational lensing, providing insight into distant galaxies.' }
+      ]
+    };
+
+    // Function to display sub-category images
+    function showSubImages(category) {
+      const subGrid = document.getElementById('sub-category-grid');
+      subGrid.innerHTML = '';  // Clear previous images
+      subGrid.style.display = 'flex'; // Make the grid visible
+
+      data[category].forEach(item => {
+        const imgElement = document.createElement('img');
+        imgElement.src = item.img;
+        imgElement.alt = item.name;
+        imgElement.onclick = () => showInfo(item.name, item.info);
+        
+        subGrid.appendChild(imgElement);
+      });
+
+      // Scroll smoothly to the sub-category section
+      subGrid.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Function to show information about the selected sub-image
+    function showInfo(title, description) {
+      const infoBox = document.getElementById('info-box');
+      infoBox.innerHTML = <h2>${title}</h2><p>${description}</p>;
+      infoBox.style.display = 'block'; // Show the info box
+    }
+  </script>
+
+</body>
+</html>
